@@ -1,0 +1,44 @@
+{
+  "name": "@node2flow/n8n-management-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for managing n8n workflows, executions, credentials, tags, variables, and users",
+  "type": "module",
+  "bin": {
+    "n8n-management-mcp": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "n8n",
+    "mcp",
+    "model-context-protocol",
+    "workflow",
+    "automation",
+    "ai",
+    "claude",
+    "cursor"
+  ],
+  "author": "Node2Flow",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/node2flow-th/n8n-management-mcp.git"
+  },
+  "homepage": "https://github.com/node2flow-th/n8n-management-mcp",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.26.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.7.2"
+  }
+}
