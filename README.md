@@ -1,5 +1,6 @@
 # n8n Management MCP Server
 
+[![npm version](https://img.shields.io/npm/v/@node2flow/n8n-management-mcp.svg)](https://www.npmjs.com/package/@node2flow/n8n-management-mcp)
 [![npm version](https://img.shields.io/npm/v/n8n-management-mcp.svg)](https://www.npmjs.com/package/n8n-management-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -20,7 +21,7 @@ MCP (Model Context Protocol) server สำหรับเชื่อมต่�
   "mcpServers": {
     "n8n": {
       "command": "npx",
-      "args": ["-y", "n8n-management-mcp"],
+      "args": ["-y", "@node2flow/n8n-management-mcp"],
       "env": {
         "N8N_URL": "https://your-n8n-instance.com",
         "N8N_API_KEY": "your-n8n-api-key"
@@ -39,7 +40,7 @@ MCP (Model Context Protocol) server สำหรับเชื่อมต่�
   "mcpServers": {
     "n8n": {
       "command": "npx",
-      "args": ["-y", "n8n-management-mcp"],
+      "args": ["-y", "@node2flow/n8n-management-mcp"],
       "env": {
         "N8N_URL": "https://your-n8n-instance.com",
         "N8N_API_KEY": "your-n8n-api-key"
@@ -54,7 +55,7 @@ MCP (Model Context Protocol) server สำหรับเชื่อมต่�
 สำหรับ deploy แบบ remote หรือใช้ร่วมกันหลายคน:
 
 ```bash
-N8N_URL=https://your-n8n.com N8N_API_KEY=your_key npx n8n-management-mcp --http
+N8N_URL=https://your-n8n.com N8N_API_KEY=your_key npx @node2flow/n8n-management-mcp --http
 ```
 
 Server จะเริ่มที่ port 3000 (เปลี่ยนได้ผ่าน `PORT` env var) MCP endpoint: `http://localhost:3000/mcp`
@@ -179,7 +180,8 @@ Copyright (c) 2026 [Node2Flow](https://node2flow.net)
 
 ## Links
 
-- [npm Package](https://www.npmjs.com/package/n8n-management-mcp)
+- [npm Package (@node2flow)](https://www.npmjs.com/package/@node2flow/n8n-management-mcp)
+- [npm Package (unscoped)](https://www.npmjs.com/package/n8n-management-mcp)
 - [n8n Documentation](https://docs.n8n.io/)
 - [MCP Protocol](https://modelcontextprotocol.io/)
 - [Node2Flow](https://node2flow.net)
