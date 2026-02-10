@@ -219,7 +219,7 @@ async function startStdio() {
  */
 async function startHttp() {
   const port = parseInt(process.env.PORT || '3000', 10);
-  const app = createMcpExpressApp();
+  const app = createMcpExpressApp({ host: '0.0.0.0' });
 
   // Map of active transports by session ID
   const transports: Record<string, StreamableHTTPServerTransport> = {};
