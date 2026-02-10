@@ -4,17 +4,19 @@
 [![npm version](https://img.shields.io/npm/v/n8n-management-mcp.svg)](https://www.npmjs.com/package/n8n-management-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-MCP (Model Context Protocol) server สำหรับเชื่อมต่อ AI assistant กับ n8n instance ของคุณ จัดการ workflows, executions, credentials, tags, variables และ users ผ่าน 31 tools
+[ภาษาไทย](README.th.md)
 
-ใช้ได้กับ Claude Desktop, Cursor, VS Code และ MCP client อื่นๆ
+MCP (Model Context Protocol) server for connecting AI assistants to your n8n instance. Manage workflows, executions, credentials, tags, variables, and users through 31 tools.
+
+Works with Claude Desktop, Cursor, VS Code, and any MCP client.
 
 ---
 
-## เริ่มต้นใช้งาน
+## Quick Start
 
 ### Claude Desktop
 
-เพิ่มใน `claude_desktop_config.json`:
+Add to `claude_desktop_config.json`:
 
 ```json
 {
@@ -33,7 +35,7 @@ MCP (Model Context Protocol) server สำหรับเชื่อมต่�
 
 ### Cursor / VS Code
 
-เพิ่มใน MCP settings:
+Add to MCP settings:
 
 ```json
 {
@@ -52,107 +54,107 @@ MCP (Model Context Protocol) server สำหรับเชื่อมต่�
 
 ### HTTP Mode (Streamable HTTP)
 
-สำหรับ deploy แบบ remote หรือใช้ร่วมกันหลายคน:
+For remote deployment or shared access:
 
 ```bash
 N8N_URL=https://your-n8n.com N8N_API_KEY=your_key npx @node2flow/n8n-management-mcp --http
 ```
 
-Server จะเริ่มที่ port 3000 (เปลี่ยนได้ผ่าน `PORT` env var) MCP endpoint: `http://localhost:3000/mcp`
+Server starts on port 3000 (configurable via `PORT` env var). MCP endpoint: `http://localhost:3000/mcp`
 
 ---
 
-## การตั้งค่า
+## Configuration
 
-| Environment Variable | จำเป็น | คำอธิบาย |
+| Environment Variable | Required | Description |
 |---|---|---|
-| `N8N_URL` | ใช่ | URL ของ n8n instance (เช่น `https://n8n.example.com`) |
-| `N8N_API_KEY` | ใช่ | n8n API key ([วิธีสร้าง](https://docs.n8n.io/api/authentication/)) |
-| `PORT` | ไม่ | Port สำหรับ HTTP server (ค่าเริ่มต้น: `3000`, ใช้กับ `--http` เท่านั้น) |
+| `N8N_URL` | Yes | URL of your n8n instance (e.g. `https://n8n.example.com`) |
+| `N8N_API_KEY` | Yes | n8n API key ([how to create](https://docs.n8n.io/api/authentication/)) |
+| `PORT` | No | Port for HTTP server (default: `3000`, only used with `--http`) |
 
 ---
 
-## Tools ทั้งหมด (31 tools)
+## All Tools (31 tools)
 
-### จัดการ Workflow (10 tools)
+### Workflow Management (10 tools)
 
-| Tool | คำอธิบาย |
+| Tool | Description |
 |---|---|
-| `n8n_list_workflows` | แสดง workflow ทั้งหมดพร้อมสถานะและ tags |
-| `n8n_get_workflow` | ดูรายละเอียด workflow (nodes, connections) |
-| `n8n_create_workflow` | สร้าง workflow ใหม่ |
-| `n8n_update_workflow` | แก้ไขโครงสร้าง workflow |
-| `n8n_delete_workflow` | ลบ workflow ถาวร |
-| `n8n_activate_workflow` | เปิด triggers ของ workflow |
-| `n8n_deactivate_workflow` | ปิด triggers ของ workflow |
-| `n8n_execute_workflow` | รัน workflow ด้วยข้อมูล input |
-| `n8n_get_workflow_tags` | ดู tags ที่กำหนดให้ workflow |
-| `n8n_update_workflow_tags` | เปลี่ยน tags ของ workflow |
+| `n8n_list_workflows` | List all workflows with status and tags |
+| `n8n_get_workflow` | Get workflow details (nodes, connections) |
+| `n8n_create_workflow` | Create a new workflow |
+| `n8n_update_workflow` | Update workflow structure |
+| `n8n_delete_workflow` | Permanently delete a workflow |
+| `n8n_activate_workflow` | Activate workflow triggers |
+| `n8n_deactivate_workflow` | Deactivate workflow triggers |
+| `n8n_execute_workflow` | Execute a workflow with input data |
+| `n8n_get_workflow_tags` | Get tags assigned to a workflow |
+| `n8n_update_workflow_tags` | Update workflow tags |
 
-### ประวัติการรัน (4 tools)
+### Execution History (4 tools)
 
-| Tool | คำอธิบาย |
+| Tool | Description |
 |---|---|
-| `n8n_list_executions` | ดูประวัติการรัน (กรองตาม workflow ได้) |
-| `n8n_get_execution` | ดูรายละเอียดการรัน พร้อม output ของแต่ละ node |
-| `n8n_delete_execution` | ลบประวัติการรัน |
-| `n8n_retry_execution` | รัน execution ที่ล้มเหลวอีกครั้ง |
+| `n8n_list_executions` | List execution history (filter by workflow) |
+| `n8n_get_execution` | Get execution details with node outputs |
+| `n8n_delete_execution` | Delete an execution record |
+| `n8n_retry_execution` | Retry a failed execution |
 
 ### Credentials (4 tools)
 
-| Tool | คำอธิบาย |
+| Tool | Description |
 |---|---|
-| `n8n_create_credential` | เก็บ API credentials |
-| `n8n_update_credential` | อัพเดทข้อมูล credential |
-| `n8n_delete_credential` | ลบ credential |
-| `n8n_get_credential_schema` | ดู fields ที่จำเป็นสำหรับ credential แต่ละประเภท |
+| `n8n_create_credential` | Store API credentials |
+| `n8n_update_credential` | Update credential data |
+| `n8n_delete_credential` | Delete a credential |
+| `n8n_get_credential_schema` | Get required fields for a credential type |
 
 ### Tags (5 tools)
 
-| Tool | คำอธิบาย |
+| Tool | Description |
 |---|---|
-| `n8n_list_tags` | แสดง tags ทั้งหมด |
-| `n8n_get_tag` | ดูรายละเอียด tag |
-| `n8n_create_tag` | สร้าง tag ใหม่ |
-| `n8n_update_tag` | เปลี่ยนชื่อ tag |
-| `n8n_delete_tag` | ลบ tag |
+| `n8n_list_tags` | List all tags |
+| `n8n_get_tag` | Get tag details |
+| `n8n_create_tag` | Create a new tag |
+| `n8n_update_tag` | Rename a tag |
+| `n8n_delete_tag` | Delete a tag |
 
 ### Variables (4 tools)
 
-| Tool | คำอธิบาย |
+| Tool | Description |
 |---|---|
-| `n8n_list_variables` | แสดง environment variables ทั้งหมด |
-| `n8n_create_variable` | สร้าง global variable |
-| `n8n_update_variable` | แก้ไขค่า variable |
-| `n8n_delete_variable` | ลบ variable |
+| `n8n_list_variables` | List all environment variables |
+| `n8n_create_variable` | Create a global variable |
+| `n8n_update_variable` | Update a variable value |
+| `n8n_delete_variable` | Delete a variable |
 
-### จัดการ Users (4 tools)
+### User Management (4 tools)
 
-| Tool | คำอธิบาย |
+| Tool | Description |
 |---|---|
-| `n8n_list_users` | แสดงผู้ใช้ทั้งหมด (เฉพาะ owner) |
-| `n8n_get_user` | ดูรายละเอียดผู้ใช้ |
-| `n8n_delete_user` | ลบผู้ใช้ |
-| `n8n_update_user_role` | เปลี่ยน role ผู้ใช้ |
+| `n8n_list_users` | List all users (owner only) |
+| `n8n_get_user` | Get user details |
+| `n8n_delete_user` | Delete a user |
+| `n8n_update_user_role` | Change user role |
 
 ---
 
-## ความต้องการ
+## Requirements
 
-- **Node.js** 18 ขึ้นไป
-- **n8n instance** ที่เปิด API
+- **Node.js** 18+
+- **n8n instance** with API enabled
 - **n8n API key**
 
-### วิธีสร้าง n8n API Key
+### How to Create an n8n API Key
 
-1. ไปที่ Settings ของ n8n instance
-2. เลือก API > API Keys
-3. กด Create API key
-4. คัดลอก key มาใช้เป็น `N8N_API_KEY`
+1. Go to your n8n instance Settings
+2. Select API > API Keys
+3. Click Create API key
+4. Copy the key and use it as `N8N_API_KEY`
 
 ---
 
-## สำหรับนักพัฒนา
+## For Developers
 
 ```bash
 git clone https://github.com/node2flow-th/n8n-management-mcp-community.git
@@ -160,13 +162,13 @@ cd n8n-management-mcp-community
 npm install
 npm run build
 
-# รันแบบ stdio
+# Run in stdio mode
 N8N_URL=https://your-n8n.com N8N_API_KEY=your_key npm start
 
-# รันแบบ dev (hot reload)
+# Run in dev mode (hot reload)
 N8N_URL=https://your-n8n.com N8N_API_KEY=your_key npm run dev
 
-# รันแบบ HTTP
+# Run in HTTP mode
 N8N_URL=https://your-n8n.com N8N_API_KEY=your_key npm start -- --http
 ```
 
@@ -174,7 +176,7 @@ N8N_URL=https://your-n8n.com N8N_API_KEY=your_key npm start -- --http
 
 ## License
 
-MIT License - ดู [LICENSE](LICENSE)
+MIT License - see [LICENSE](LICENSE)
 
 Copyright (c) 2026 [Node2Flow](https://node2flow.net)
 
