@@ -3,7 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/@node2flow/n8n-management-mcp.svg)](https://www.npmjs.com/package/@node2flow/n8n-management-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-[ภาษาไทย](README.th.md)
+[ภาษาไทย](docs/README.th.md)
 
 MCP (Model Context Protocol) server for connecting AI assistants to your n8n instance. Manage workflows, executions, credentials, tags, variables, and users through 31 tools.
 
