@@ -352,9 +352,12 @@ async function main() {
 }
 
 /**
- * Smithery sandbox server for scanning tools without real credentials
+ * Smithery expects a default export that returns a Server instance.
+ * Config (N8N_URL, N8N_API_KEY) is provided by users at runtime via Smithery UI.
  */
-export function createSandboxServer() {
+export default function createSmitheryServer(opts?: { config?: { N8N_URL?: string; N8N_API_KEY?: string } }) {
+  if (opts?.config?.N8N_URL) process.env.N8N_URL = opts.config.N8N_URL;
+  if (opts?.config?.N8N_API_KEY) process.env.N8N_API_KEY = opts.config.N8N_API_KEY;
   return createServer();
 }
 
