@@ -226,6 +226,13 @@ async function startHttp() {
 
   // POST /mcp — handle MCP requests
   app.post('/mcp', async (req: any, res: any) => {
+    // Read config from query params (Smithery gateway) or env vars
+    const url = new URL(req.url, `http://${req.headers.host}`);
+    const qUrl = url.searchParams.get('N8N_URL');
+    const qKey = url.searchParams.get('N8N_API_KEY');
+    if (qUrl) process.env.N8N_URL = qUrl;
+    if (qKey) process.env.N8N_API_KEY = qKey;
+
     const sessionId = req.headers['mcp-session-id'] as string | undefined;
 
     try {

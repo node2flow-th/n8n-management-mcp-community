@@ -1,0 +1,9 @@
+services:
+  n8n-management-mcp-community:
+    build: .
+    container_name: n8n-management-mcp-community
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3020:3000"
+    mem_limit: 512m
+    mem_reservation: 256m
