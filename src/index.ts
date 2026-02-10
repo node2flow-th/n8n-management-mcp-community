@@ -35,21 +35,21 @@ function getConfig() {
   const apiKey = process.env.N8N_API_KEY;
 
   if (!apiUrl || !apiKey) {
-    console.error('Error: Missing required environment variables');
-    console.error('');
-    console.error('Required:');
-    console.error('  N8N_URL      Your n8n instance URL (e.g., https://n8n.example.com)');
-    console.error('  N8N_API_KEY  Your n8n API key');
-    console.error('');
-    console.error('Usage (stdio):');
-    console.error('  N8N_URL=https://n8n.example.com N8N_API_KEY=your_key npx @node2flow/n8n-management-mcp');
-    console.error('');
-    console.error('Usage (HTTP):');
-    console.error('  N8N_URL=https://n8n.example.com N8N_API_KEY=your_key npx @node2flow/n8n-management-mcp --http');
-    process.exit(1);
+    return null;
   }
 
   return { apiUrl, apiKey };
+}
+
+function requireConfig() {
+  const config = getConfig();
+  if (!config) {
+    throw new Error(
+      'Missing required environment variables: N8N_URL and N8N_API_KEY. ' +
+      'Set them before using any tools.'
+    );
+  }
+  return config;
 }
 
 /**
@@ -138,12 +138,13 @@ async function handleToolCall(toolName: string, args: any, client: N8nClient): P
 
 /**
  * Create a configured MCP Server instance
+ * Client is created lazily on first tool call (allows Smithery scanning without env vars)
  */
-function createServer(client: N8nClient): Server {
+function createServer(): Server {
   const server = new Server(
     {
       name: 'n8n-management-mcp',
-      version: '1.0.0',
+      version: '1.0.3',
     },
     {
       capabilities: {
@@ -151,6 +152,16 @@ function createServer(client: N8nClient): Server {
       },
     }
   );
+
+  let client: N8nClient | null = null;
+
+  function getClient(): N8nClient {
+    if (!client) {
+      const config = requireConfig();
+      client = new N8nClient(config);
+    }
+    return client;
+  }
 
   // List available tools
   server.setRequestHandler(ListToolsRequestSchema, async () => {
@@ -162,7 +173,7 @@ function createServer(client: N8nClient): Server {
     const { name, arguments: args } = request.params;
 
     try {
-      const result = await handleToolCall(name, args || {}, client);
+      const result = await handleToolCall(name, args || {}, getClient());
 
       return {
         content: [
@@ -191,13 +202,14 @@ function createServer(client: N8nClient): Server {
 /**
  * Start in stdio mode (for Claude Desktop, Cursor, VS Code)
  */
-async function startStdio(client: N8nClient) {
-  const server = createServer(client);
+async function startStdio() {
+  const server = createServer();
   const transport = new StdioServerTransport();
   await server.connect(transport);
 
+  const config = getConfig();
   console.error('n8n Management MCP Server running on stdio');
-  console.error(`Connected to: ${client['config'].apiUrl}`);
+  console.error(`Connected to: ${config?.apiUrl ?? '(not configured yet)'}`);
   console.error(`Tools available: ${TOOLS.length}`);
   console.error('Ready for MCP client\n');
 }
@@ -205,7 +217,7 @@ async function startStdio(client: N8nClient) {
 /**
  * Start in HTTP mode (Streamable HTTP transport)
  */
-async function startHttp(client: N8nClient) {
+async function startHttp() {
   const port = parseInt(process.env.PORT || '3000', 10);
   const app = createMcpExpressApp();
 
@@ -238,7 +250,7 @@ async function startHttp(client: N8nClient) {
           }
         };
 
-        const server = createServer(client);
+        const server = createServer();
         await server.connect(transport);
         await transport.handleRequest(req, res, req.body);
         return;
@@ -304,9 +316,10 @@ async function startHttp(client: N8nClient) {
     });
   });
 
+  const config = getConfig();
   app.listen(port, () => {
     console.log(`n8n Management MCP Server (HTTP) listening on port ${port}`);
-    console.log(`Connected to: ${client['config'].apiUrl}`);
+    console.log(`Connected to: ${config?.apiUrl ?? '(not configured yet)'}`);
     console.log(`Tools available: ${TOOLS.length}`);
     console.log(`MCP endpoint: http://localhost:${port}/mcp`);
   });
@@ -329,15 +342,12 @@ async function startHttp(client: N8nClient) {
  * Main entry point
  */
 async function main() {
-  const config = getConfig();
-  const client = new N8nClient(config);
-
   const useHttp = process.argv.includes('--http');
 
   if (useHttp) {
-    await startHttp(client);
+    await startHttp();
   } else {
-    await startStdio(client);
+    await startStdio();
   }
 }
 
