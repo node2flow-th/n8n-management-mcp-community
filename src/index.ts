@@ -351,6 +351,13 @@ async function main() {
   }
 }
 
+/**
+ * Smithery sandbox server for scanning tools without real credentials
+ */
+export function createSandboxServer() {
+  return createServer();
+}
+
 main().catch((error) => {
   console.error('Fatal error:', error);
   process.exit(1);
