@@ -1,5 +1,6 @@
 # n8n Management MCP Server
 
+[![smithery badge](https://smithery.ai/badge/node2flow/n8n-management)](https://smithery.ai/server/node2flow/n8n-management)
 [![npm version](https://img.shields.io/npm/v/@node2flow/n8n-management-mcp.svg)](https://www.npmjs.com/package/@node2flow/n8n-management-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
