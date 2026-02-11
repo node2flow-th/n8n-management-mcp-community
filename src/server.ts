@@ -94,7 +94,7 @@ export function createServer(config?: { apiUrl: string; apiKey: string }): Serve
   const server = new Server(
     {
       name: 'n8n-management-mcp',
-      version: '1.0.4',
+      version: '1.0.5',
     },
     {
       capabilities: {
