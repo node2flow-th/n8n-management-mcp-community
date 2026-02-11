@@ -9,7 +9,10 @@ export class N8nClient {
   private config: N8nConfig;
 
   constructor(config: N8nConfig) {
-    this.config = config;
+    this.config = {
+      ...config,
+      apiUrl: config.apiUrl.replace(/\/+$/, ''),
+    };
   }
 
   /**
