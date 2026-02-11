@@ -10,7 +10,10 @@ export const TOOLS = [
     description: 'Retrieve all workflows with their status, tags, and metadata. Returns workflow ID, name, active status, creation date, and tags. Use this to browse available automations or find a specific workflow by name.',
     inputSchema: {
       type: 'object',
-      properties: {},
+      properties: {
+        active: { type: 'boolean', description: 'Filter by active status (true = active only, false = inactive only, omit for all)' },
+        tags: { type: 'string', description: 'Filter by tag names (comma-separated, e.g. "production,urgent")' },
+      },
     },
     annotations: {
       title: 'List Workflows',
@@ -345,7 +348,9 @@ export const TOOLS = [
     description: 'Retrieve all available tags for workflow organization. Returns tag ID and name. Use this before assigning tags to workflows or to see your tagging structure.',
     inputSchema: {
       type: 'object',
-      properties: {},
+      properties: {
+        limit: { type: 'number', description: 'Maximum number of tags to return (default: all)' },
+      },
     },
     annotations: {
       title: 'List Tags',
@@ -433,7 +438,9 @@ export const TOOLS = [
     description: 'Retrieve all n8n users with their roles and status. Only available to instance owner. Returns user ID, email, role (owner/admin/member), and disabled status. Use this for user management and auditing.',
     inputSchema: {
       type: 'object',
-      properties: {},
+      properties: {
+        limit: { type: 'number', description: 'Maximum number of users to return (default: all)' },
+      },
     },
     annotations: {
       title: 'List Users',

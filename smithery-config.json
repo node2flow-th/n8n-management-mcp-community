@@ -3,10 +3,12 @@
   "properties": {
     "N8N_URL": {
       "type": "string",
+      "default": "",
       "description": "Your n8n instance URL (e.g. https://your-n8n.example.com)"
     },
     "N8N_API_KEY": {
       "type": "string",
+      "default": "",
       "description": "Your n8n API key"
     }
   }

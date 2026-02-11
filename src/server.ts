@@ -23,7 +23,7 @@ export async function handleToolCall(toolName: string, args: any, client: N8nCli
   switch (toolName) {
     // Workflow operations
     case 'n8n_list_workflows':
-      return client.listWorkflows();
+      return client.listWorkflows(args);
     case 'n8n_get_workflow':
       return client.getWorkflow(args.id);
     case 'n8n_create_workflow':

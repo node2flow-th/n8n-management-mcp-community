@@ -42,8 +42,12 @@ export class N8nClient {
   }
 
   // Workflow Methods
-  async listWorkflows() {
-    return this.request('/api/v1/workflows', { method: 'GET' });
+  async listWorkflows(params?: { active?: boolean; tags?: string }) {
+    const query = new URLSearchParams();
+    if (params?.active !== undefined) query.set('active', String(params.active));
+    if (params?.tags) query.set('tags', params.tags);
+    const qs = query.toString();
+    return this.request(`/api/v1/workflows${qs ? `?${qs}` : ''}`, { method: 'GET' });
   }
 
   async getWorkflow(id: string) {
