@@ -71,16 +71,6 @@ export async function handleToolCall(toolName: string, args: any, client: N8nCli
     case 'n8n_delete_tag':
       return client.deleteTag(args.id);
 
-    // Variable operations
-    case 'n8n_list_variables':
-      return client.listVariables();
-    case 'n8n_create_variable':
-      return client.createVariable(args.key, args.value);
-    case 'n8n_update_variable':
-      return client.updateVariable(args.id, args.key, args.value);
-    case 'n8n_delete_variable':
-      return client.deleteVariable(args.id);
-
     // User operations
     case 'n8n_list_users':
       return client.listUsers();
