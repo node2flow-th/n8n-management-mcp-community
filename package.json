@@ -1,6 +1,6 @@
 {
   "name": "@node2flow/n8n-management-mcp",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "MCP server for managing n8n workflows, executions, credentials, tags, variables, and users",
   "type": "module",
   "bin": {

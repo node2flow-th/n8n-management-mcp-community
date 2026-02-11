@@ -5,6 +5,8 @@
 export interface N8nConfig {
   apiUrl: string;
   apiKey: string;
+  timeout?: number;
+  apiPath?: string;
 }
 
 export interface N8nWorkflow {

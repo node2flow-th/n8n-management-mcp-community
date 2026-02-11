@@ -94,11 +94,11 @@ export async function handleToolCall(toolName: string, args: any, client: N8nCli
  * Create a configured MCP Server instance
  * Config is optional — tools/list works without config, tool calls require it
  */
-export function createServer(config?: { apiUrl: string; apiKey: string }): Server {
+export function createServer(config?: { apiUrl: string; apiKey: string; timeout?: number; apiPath?: string }): Server {
   const server = new Server(
     {
       name: 'n8n-management-mcp',
-      version: '1.0.7',
+      version: '1.0.9',
     },
     {
       capabilities: {
@@ -260,7 +260,7 @@ export function createServer(config?: { apiUrl: string; apiKey: string }): Serve
               mimeType: 'application/json',
               text: JSON.stringify({
                 name: 'n8n-management-mcp',
-                version: '1.0.7',
+                version: '1.0.9',
                 connected: !!config,
                 n8n_url: config?.apiUrl ?? null,
                 tools_available: TOOLS.length,

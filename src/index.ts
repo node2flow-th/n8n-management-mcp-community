@@ -33,7 +33,10 @@ function getConfig() {
     return null;
   }
 
-  return { apiUrl, apiKey };
+  const timeout = process.env.N8N_TIMEOUT ? parseInt(process.env.N8N_TIMEOUT, 10) : undefined;
+  const apiPath = process.env.N8N_API_PATH || undefined;
+
+  return { apiUrl, apiKey, timeout, apiPath };
 }
 
 /**
@@ -67,8 +70,12 @@ async function startHttp() {
     const url = new URL(req.url, `http://${req.headers.host}`);
     const qUrl = url.searchParams.get('N8N_URL');
     const qKey = url.searchParams.get('N8N_API_KEY');
+    const qTimeout = url.searchParams.get('N8N_TIMEOUT');
+    const qApiPath = url.searchParams.get('N8N_API_PATH');
     if (qUrl) process.env.N8N_URL = qUrl;
     if (qKey) process.env.N8N_API_KEY = qKey;
+    if (qTimeout) process.env.N8N_TIMEOUT = qTimeout;
+    if (qApiPath) process.env.N8N_API_PATH = qApiPath;
 
     const sessionId = req.headers['mcp-session-id'] as string | undefined;
 
@@ -151,7 +158,7 @@ async function startHttp() {
   app.get('/', (_req: any, res: any) => {
     res.json({
       name: 'n8n-management-mcp',
-      version: '1.0.7',
+      version: '1.0.9',
       status: 'ok',
       tools: TOOLS.length,
       transport: 'streamable-http',
@@ -200,9 +207,11 @@ async function main() {
  * Smithery expects a default export that returns a Server instance.
  * Config (N8N_URL, N8N_API_KEY) is provided by users at runtime via Smithery UI.
  */
-export default function createSmitheryServer(opts?: { config?: { N8N_URL?: string; N8N_API_KEY?: string } }) {
+export default function createSmitheryServer(opts?: { config?: { N8N_URL?: string; N8N_API_KEY?: string; N8N_TIMEOUT?: number; N8N_API_PATH?: string } }) {
   if (opts?.config?.N8N_URL) process.env.N8N_URL = opts.config.N8N_URL;
   if (opts?.config?.N8N_API_KEY) process.env.N8N_API_KEY = opts.config.N8N_API_KEY;
+  if (opts?.config?.N8N_TIMEOUT) process.env.N8N_TIMEOUT = String(opts.config.N8N_TIMEOUT);
+  if (opts?.config?.N8N_API_PATH) process.env.N8N_API_PATH = opts.config.N8N_API_PATH;
   const config = getConfig();
   return createServer(config ?? undefined);
 }

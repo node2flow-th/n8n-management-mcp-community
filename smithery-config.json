@@ -1,15 +1,24 @@
 {
   "type": "object",
+  "required": ["N8N_URL", "N8N_API_KEY"],
   "properties": {
     "N8N_URL": {
       "type": "string",
-      "default": "",
       "description": "Your n8n instance URL (e.g. https://your-n8n.example.com)"
     },
     "N8N_API_KEY": {
       "type": "string",
-      "default": "",
-      "description": "Your n8n API key"
+      "description": "Your n8n API key from Settings > API > Create API Key"
+    },
+    "N8N_TIMEOUT": {
+      "type": "number",
+      "default": 30000,
+      "description": "Request timeout in milliseconds (default: 30000)"
+    },
+    "N8N_API_PATH": {
+      "type": "string",
+      "default": "/api/v1",
+      "description": "n8n REST API base path (default: /api/v1)"
     }
   }
 }

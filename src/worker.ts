@@ -46,7 +46,7 @@ export default {
     if (url.pathname === '/' && request.method === 'GET') {
       return addCors(Response.json({
         name: 'n8n-management-mcp',
-        version: '1.0.5',
+        version: '1.0.9',
         status: 'ok',
         tools: TOOLS.length,
         transport: 'streamable-http',
@@ -70,7 +70,14 @@ export default {
     // Read n8n config from query params (Smithery gateway sends these)
     const n8nUrl = url.searchParams.get('N8N_URL');
     const n8nApiKey = url.searchParams.get('N8N_API_KEY');
-    const config = n8nUrl && n8nApiKey ? { apiUrl: n8nUrl, apiKey: n8nApiKey } : undefined;
+    const n8nTimeout = url.searchParams.get('N8N_TIMEOUT');
+    const n8nApiPath = url.searchParams.get('N8N_API_PATH');
+    const config = n8nUrl && n8nApiKey ? {
+      apiUrl: n8nUrl,
+      apiKey: n8nApiKey,
+      timeout: n8nTimeout ? parseInt(n8nTimeout, 10) : undefined,
+      apiPath: n8nApiPath || undefined,
+    } : undefined;
 
     try {
       // Stateless: new transport + server per request
