@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "N8N_URL": {
+      "type": "string",
+      "description": "Your n8n instance URL (e.g. https://your-n8n.example.com)"
+    },
+    "N8N_API_KEY": {
+      "type": "string",
+      "description": "Your n8n API key"
+    }
+  },
+  "required": ["N8N_URL", "N8N_API_KEY"]
+}
