@@ -151,7 +151,7 @@ async function startHttp() {
   app.get('/', (_req: any, res: any) => {
     res.json({
       name: 'n8n-management-mcp',
-      version: '1.0.5',
+      version: '1.0.7',
       status: 'ok',
       tools: TOOLS.length,
       transport: 'streamable-http',

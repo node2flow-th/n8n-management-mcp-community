@@ -9,6 +9,5 @@
       "type": "string",
       "description": "Your n8n API key"
     }
-  },
-  "required": ["N8N_URL", "N8N_API_KEY"]
+  }
 }

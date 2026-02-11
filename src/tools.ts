@@ -1,6 +1,6 @@
 /**
- * MCP Tool Definitions (31 tools total)
- * n8n workflow, execution, credential, tag, variable, and user management
+ * MCP Tool Definitions (27 tools)
+ * n8n workflow, execution, credential, tag, and user management
  */
 
 export const TOOLS = [
@@ -12,6 +12,12 @@ export const TOOLS = [
       type: 'object',
       properties: {},
     },
+    annotations: {
+      title: 'List Workflows',
+      readOnlyHint: true,
+      destructiveHint: false,
+      openWorldHint: true,
+    },
   },
   {
     name: 'n8n_get_workflow',
@@ -22,6 +28,12 @@ export const TOOLS = [
         id: { type: 'string', description: 'Workflow ID from list_workflows' },
       },
       required: ['id'],
+    },
+    annotations: {
+      title: 'Get Workflow',
+      readOnlyHint: true,
+      destructiveHint: false,
+      openWorldHint: true,
     },
   },
   {
@@ -37,6 +49,13 @@ export const TOOLS = [
       },
       required: ['name', 'nodes', 'connections'],
     },
+    annotations: {
+      title: 'Create Workflow',
+      readOnlyHint: false,
+      destructiveHint: false,
+      idempotentHint: false,
+      openWorldHint: true,
+    },
   },
   {
     name: 'n8n_update_workflow',
@@ -51,6 +70,13 @@ export const TOOLS = [
       },
       required: ['id'],
     },
+    annotations: {
+      title: 'Update Workflow',
+      readOnlyHint: false,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: true,
+    },
   },
   {
     name: 'n8n_delete_workflow',
@@ -61,6 +87,13 @@ export const TOOLS = [
         id: { type: 'string', description: 'Workflow ID to permanently delete' },
       },
       required: ['id'],
+    },
+    annotations: {
+      title: 'Delete Workflow',
+      readOnlyHint: false,
+      destructiveHint: true,
+      idempotentHint: true,
+      openWorldHint: true,
     },
   },
   {
@@ -73,6 +106,13 @@ export const TOOLS = [
       },
       required: ['id'],
     },
+    annotations: {
+      title: 'Activate Workflow',
+      readOnlyHint: false,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: true,
+    },
   },
   {
     name: 'n8n_deactivate_workflow',
@@ -83,6 +123,13 @@ export const TOOLS = [
         id: { type: 'string', description: 'Workflow ID to deactivate' },
       },
       required: ['id'],
+    },
+    annotations: {
+      title: 'Deactivate Workflow',
+      readOnlyHint: false,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: true,
     },
   },
   {
@@ -96,6 +143,13 @@ export const TOOLS = [
       },
       required: ['id'],
     },
+    annotations: {
+      title: 'Execute Workflow',
+      readOnlyHint: false,
+      destructiveHint: false,
+      idempotentHint: false,
+      openWorldHint: true,
+    },
   },
   {
     name: 'n8n_get_workflow_tags',
@@ -106,6 +160,12 @@ export const TOOLS = [
         id: { type: 'string', description: 'Workflow ID' },
       },
       required: ['id'],
+    },
+    annotations: {
+      title: 'Get Workflow Tags',
+      readOnlyHint: true,
+      destructiveHint: false,
+      openWorldHint: true,
     },
   },
   {
@@ -119,6 +179,13 @@ export const TOOLS = [
       },
       required: ['id', 'tags'],
     },
+    annotations: {
+      title: 'Update Workflow Tags',
+      readOnlyHint: false,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: true,
+    },
   },
 
   // ========== Execution Tools (4) ==========
@@ -131,6 +198,12 @@ export const TOOLS = [
         workflowId: { type: 'string', description: 'Filter executions for specific workflow (optional, omit for all)' },
       },
     },
+    annotations: {
+      title: 'List Executions',
+      readOnlyHint: true,
+      destructiveHint: false,
+      openWorldHint: true,
+    },
   },
   {
     name: 'n8n_get_execution',
@@ -141,6 +214,12 @@ export const TOOLS = [
         id: { type: 'string', description: 'Execution ID from list_executions' },
       },
       required: ['id'],
+    },
+    annotations: {
+      title: 'Get Execution',
+      readOnlyHint: true,
+      destructiveHint: false,
+      openWorldHint: true,
     },
   },
   {
@@ -153,6 +232,13 @@ export const TOOLS = [
       },
       required: ['id'],
     },
+    annotations: {
+      title: 'Delete Execution',
+      readOnlyHint: false,
+      destructiveHint: true,
+      idempotentHint: true,
+      openWorldHint: true,
+    },
   },
   {
     name: 'n8n_retry_execution',
@@ -163,6 +249,13 @@ export const TOOLS = [
         id: { type: 'string', description: 'Failed execution ID to retry' },
       },
       required: ['id'],
+    },
+    annotations: {
+      title: 'Retry Execution',
+      readOnlyHint: false,
+      destructiveHint: false,
+      idempotentHint: false,
+      openWorldHint: true,
     },
   },
 
@@ -179,6 +272,13 @@ export const TOOLS = [
       },
       required: ['name', 'type', 'data'],
     },
+    annotations: {
+      title: 'Create Credential',
+      readOnlyHint: false,
+      destructiveHint: false,
+      idempotentHint: false,
+      openWorldHint: true,
+    },
   },
   {
     name: 'n8n_update_credential',
@@ -192,6 +292,13 @@ export const TOOLS = [
       },
       required: ['id'],
     },
+    annotations: {
+      title: 'Update Credential',
+      readOnlyHint: false,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: true,
+    },
   },
   {
     name: 'n8n_delete_credential',
@@ -202,6 +309,13 @@ export const TOOLS = [
         id: { type: 'string', description: 'Credential ID to permanently delete' },
       },
       required: ['id'],
+    },
+    annotations: {
+      title: 'Delete Credential',
+      readOnlyHint: false,
+      destructiveHint: true,
+      idempotentHint: true,
+      openWorldHint: true,
     },
   },
   {
@@ -217,6 +331,12 @@ export const TOOLS = [
       },
       required: ['credentialType'],
     },
+    annotations: {
+      title: 'Get Credential Schema',
+      readOnlyHint: true,
+      destructiveHint: false,
+      openWorldHint: true,
+    },
   },
 
   // ========== Tag Tools (5) ==========
@@ -226,6 +346,12 @@ export const TOOLS = [
     inputSchema: {
       type: 'object',
       properties: {},
+    },
+    annotations: {
+      title: 'List Tags',
+      readOnlyHint: true,
+      destructiveHint: false,
+      openWorldHint: true,
     },
   },
   {
@@ -238,6 +364,12 @@ export const TOOLS = [
       },
       required: ['id'],
     },
+    annotations: {
+      title: 'Get Tag',
+      readOnlyHint: true,
+      destructiveHint: false,
+      openWorldHint: true,
+    },
   },
   {
     name: 'n8n_create_tag',
@@ -248,6 +380,13 @@ export const TOOLS = [
         name: { type: 'string', description: 'Tag name (case-sensitive, spaces allowed)' },
       },
       required: ['name'],
+    },
+    annotations: {
+      title: 'Create Tag',
+      readOnlyHint: false,
+      destructiveHint: false,
+      idempotentHint: false,
+      openWorldHint: true,
     },
   },
   {
@@ -261,6 +400,13 @@ export const TOOLS = [
       },
       required: ['id', 'name'],
     },
+    annotations: {
+      title: 'Update Tag',
+      readOnlyHint: false,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: true,
+    },
   },
   {
     name: 'n8n_delete_tag',
@@ -272,6 +418,13 @@ export const TOOLS = [
       },
       required: ['id'],
     },
+    annotations: {
+      title: 'Delete Tag',
+      readOnlyHint: false,
+      destructiveHint: true,
+      idempotentHint: true,
+      openWorldHint: true,
+    },
   },
 
   // ========== User Tools (4) - Requires owner permissions ==========
@@ -281,6 +434,12 @@ export const TOOLS = [
     inputSchema: {
       type: 'object',
       properties: {},
+    },
+    annotations: {
+      title: 'List Users',
+      readOnlyHint: true,
+      destructiveHint: false,
+      openWorldHint: true,
     },
   },
   {
@@ -293,6 +452,12 @@ export const TOOLS = [
       },
       required: ['identifier'],
     },
+    annotations: {
+      title: 'Get User',
+      readOnlyHint: true,
+      destructiveHint: false,
+      openWorldHint: true,
+    },
   },
   {
     name: 'n8n_delete_user',
@@ -303,6 +468,13 @@ export const TOOLS = [
         id: { type: 'string', description: 'User ID to permanently delete (not email)' },
       },
       required: ['id'],
+    },
+    annotations: {
+      title: 'Delete User',
+      readOnlyHint: false,
+      destructiveHint: true,
+      idempotentHint: true,
+      openWorldHint: true,
     },
   },
   {
@@ -315,6 +487,13 @@ export const TOOLS = [
         role: { type: 'string', enum: ['admin', 'member'], description: 'New permission level' },
       },
       required: ['id', 'role'],
+    },
+    annotations: {
+      title: 'Update User Role',
+      readOnlyHint: false,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: true,
     },
   },
 ];

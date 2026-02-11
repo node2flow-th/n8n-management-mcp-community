@@ -7,6 +7,10 @@ import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
+  ListPromptsRequestSchema,
+  GetPromptRequestSchema,
+  ListResourcesRequestSchema,
+  ReadResourceRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
 
 import { N8nClient } from './n8n-client.js';
@@ -94,11 +98,13 @@ export function createServer(config?: { apiUrl: string; apiKey: string }): Serve
   const server = new Server(
     {
       name: 'n8n-management-mcp',
-      version: '1.0.5',
+      version: '1.0.7',
     },
     {
       capabilities: {
         tools: {},
+        prompts: {},
+        resources: {},
       },
     }
   );
@@ -148,6 +154,130 @@ export function createServer(config?: { apiUrl: string; apiKey: string }): Serve
         ],
         isError: true,
       };
+    }
+  });
+
+  // List available prompts
+  server.setRequestHandler(ListPromptsRequestSchema, async () => {
+    return {
+      prompts: [
+        {
+          name: 'manage-workflows',
+          description: 'Guide for managing n8n workflows — list, create, activate, execute, and organize with tags',
+        },
+        {
+          name: 'debug-execution',
+          description: 'Step-by-step guide to diagnose and fix failed n8n workflow executions',
+        },
+      ],
+    };
+  });
+
+  // Get prompt content
+  server.setRequestHandler(GetPromptRequestSchema, async (request) => {
+    const { name } = request.params;
+
+    switch (name) {
+      case 'manage-workflows':
+        return {
+          messages: [
+            {
+              role: 'user' as const,
+              content: {
+                type: 'text' as const,
+                text: [
+                  'You are an n8n workflow management assistant. Help me manage my n8n automations.',
+                  '',
+                  'Available actions:',
+                  '1. **List workflows** — Use n8n_list_workflows to see all automations',
+                  '2. **Inspect workflow** — Use n8n_get_workflow to see nodes and connections',
+                  '3. **Create workflow** — Use n8n_create_workflow with name, nodes, and connections',
+                  '4. **Activate/Deactivate** — Use n8n_activate_workflow or n8n_deactivate_workflow',
+                  '5. **Execute manually** — Use n8n_execute_workflow to test with custom data',
+                  '6. **Organize with tags** — Use n8n_list_tags, n8n_create_tag, n8n_update_workflow_tags',
+                  '',
+                  'Start by listing my current workflows.',
+                ].join('\n'),
+              },
+            },
+          ],
+        };
+
+      case 'debug-execution':
+        return {
+          messages: [
+            {
+              role: 'user' as const,
+              content: {
+                type: 'text' as const,
+                text: [
+                  'You are an n8n debugging assistant. Help me find and fix failed workflow executions.',
+                  '',
+                  'Debugging steps:',
+                  '1. **Find failures** — Use n8n_list_executions to find executions with error status',
+                  '2. **Get details** — Use n8n_get_execution to see the full error message and which node failed',
+                  '3. **Inspect workflow** — Use n8n_get_workflow to understand the workflow structure',
+                  '4. **Check credentials** — Use n8n_get_credential_schema to verify required fields',
+                  '5. **Retry** — Use n8n_retry_execution to rerun after fixing the issue',
+                  '6. **Clean up** — Use n8n_delete_execution to remove old test runs',
+                  '',
+                  'Start by listing recent executions to find any failures.',
+                ].join('\n'),
+              },
+            },
+          ],
+        };
+
+      default:
+        throw new Error(`Unknown prompt: ${name}`);
+    }
+  });
+
+  // List available resources
+  server.setRequestHandler(ListResourcesRequestSchema, async () => {
+    return {
+      resources: [
+        {
+          uri: 'n8n://server-info',
+          name: 'n8n Server Info',
+          description: 'Connection status and available tools for this n8n MCP server',
+          mimeType: 'application/json',
+        },
+      ],
+    };
+  });
+
+  // Read resource content
+  server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
+    const { uri } = request.params;
+
+    switch (uri) {
+      case 'n8n://server-info':
+        return {
+          contents: [
+            {
+              uri: 'n8n://server-info',
+              mimeType: 'application/json',
+              text: JSON.stringify({
+                name: 'n8n-management-mcp',
+                version: '1.0.7',
+                connected: !!config,
+                n8n_url: config?.apiUrl ?? null,
+                tools_available: TOOLS.length,
+                tool_categories: {
+                  workflows: 10,
+                  executions: 4,
+                  credentials: 4,
+                  tags: 5,
+                  users: 4,
+                },
+              }, null, 2),
+            },
+          ],
+        };
+
+      default:
+        throw new Error(`Unknown resource: ${uri}`);
     }
   });
 
