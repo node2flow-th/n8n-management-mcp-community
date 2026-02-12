@@ -1,5 +1,7 @@
 node_modules/
 dist/
+.smithery/
+.wrangler/
 *.js.map
 *.d.ts.map
 .env
